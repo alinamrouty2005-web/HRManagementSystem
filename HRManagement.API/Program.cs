@@ -84,6 +84,7 @@ builder.Services.AddScoped<IEmployeePositionService,EmployeePositionService>();
 // Application health check
 builder.Services.AddHealthChecks();
 
+// Add JWT
 builder.Services.AddAuthentication();
 
 builder.Services.AddAuthorization();
