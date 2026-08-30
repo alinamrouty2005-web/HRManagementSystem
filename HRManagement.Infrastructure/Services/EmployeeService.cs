@@ -45,16 +45,17 @@ namespace HRManagement.Infrastructure.Services
 
         public async Task<Employee?> GetByIdAsync(int id)
         {
-            _logger.LogInformation("Getting employee with ID {EmployeeId}.",id);
+            _logger.LogInformation("Getting employee with ID {EmployeeId}", id);
 
-            var employee =await _employeeRepository.GetByIdAsync(id);
+            var employee = await _employeeRepository.GetByIdAsync(id);
 
-            if (employee is null)
+            if (employee == null)
             {
-                _logger.LogWarning("Employee with ID {EmployeeId} was not found.",id);
-
+                _logger.LogWarning("Employee with ID {EmployeeId} was not found", id);
                 return null;
             }
+
+            _logger.LogInformation("Employee with ID {EmployeeId} retrieved successfully", id);
 
             return employee;
         }
