@@ -20,11 +20,70 @@ namespace HRManagement.Infrastructure.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<List<PayrollDto>> GetAllAsync()
+        public async Task<PagedResultDto<PayrollDto>> GetAllAsync(
+    string? search,
+    int pageNumber,
+    int pageSize,
+    int? employeeId,
+    bool? isPaid,
+    string? sortBy)
         {
-            var payrolls = await _payrollRepository.GetAllAsync();
+            var payrolls =
+                await _payrollRepository.GetAllAsync();
 
-            return payrolls.Select(p => new PayrollDto
+            if (!string.IsNullOrWhiteSpace(search) &&
+                int.TryParse(search, out int searchEmployeeId))
+            {
+                payrolls = payrolls
+                    .Where(p => p.EmployeeId == searchEmployeeId)
+                    .ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                payrolls = payrolls
+                    .Where(p => p.EmployeeId == employeeId.Value)
+                    .ToList();
+            }
+
+            if (isPaid.HasValue)
+            {
+                payrolls = payrolls
+                    .Where(p => p.IsPaid == isPaid.Value)
+                    .ToList();
+            }
+
+            if (sortBy == "payrollDate")
+            {
+                payrolls = payrolls
+                    .OrderBy(p => p.PayrollDate)
+                    .ToList();
+            }
+            else if (sortBy == "netSalary")
+            {
+                payrolls = payrolls
+                    .OrderBy(p => p.NetSalary)
+                    .ToList();
+            }
+            else
+            {
+                payrolls = payrolls
+                    .OrderBy(p => p.PayrollId)
+                    .ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = payrolls.Count();
+
+            var result = payrolls
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(p => new PayrollDto
                 {
                     PayrollId = p.PayrollId,
                     EmployeeId = p.EmployeeId,
@@ -33,7 +92,16 @@ namespace HRManagement.Infrastructure.Services
                     NetSalary = p.NetSalary,
                     PayrollDate = p.PayrollDate,
                     IsPaid = p.IsPaid
-                }).ToList();
+                })
+                .ToList();
+
+            return new PagedResultDto<PayrollDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<PayrollDto?> GetByIdAsync(int id)

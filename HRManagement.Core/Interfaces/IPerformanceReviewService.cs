@@ -7,8 +7,15 @@ namespace HRManagement.Core.Interfaces
 {
     public interface IPerformanceReviewService
     {
-        Task<List<PerformanceReviewDto>> GetAllAsync();
-
+        Task<PagedResultDto<PerformanceReviewDto>> GetAllAsync(
+            string? search,
+            int pageNumber,
+            int pageSize,
+            int? employeeId,
+            int? reviewerId,
+            decimal? minScore,
+            decimal? maxScore,
+            string? sortBy);
         Task<PerformanceReviewDto?> GetByIdAsync(int id);
 
         Task<PerformanceReviewDto> CreateAsync(PerformanceReviewCreateDto dto);

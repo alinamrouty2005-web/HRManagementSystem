@@ -7,8 +7,12 @@ namespace HRManagement.Core.Interfaces
 {
     public interface IEmployeeProfileService
     {
-        Task<List<EmployeeProfileDto>> GetAllAsync();
-
+        Task<PagedResultDto<EmployeeProfileDto>> GetAllAsync(
+            string? search,
+            int pageNumber,
+            int pageSize,
+            int? employeeId,
+            string? sortBy);
         Task<EmployeeProfileDto?> GetByIdAsync(int id);
 
         Task<EmployeeProfileDto?> GetByEmployeeIdAsync(int employeeId);

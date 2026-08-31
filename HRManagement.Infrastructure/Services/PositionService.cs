@@ -19,17 +19,63 @@ namespace HRManagement.Infrastructure.Services
             _positionRepository = positionRepository;
         }
 
-        public async Task<List<PositionDto>> GetAllAsync()
+        public async Task<PagedResultDto<PositionDto>> GetAllAsync(string? search,int pageNumber,int pageSize,string? sortBy,decimal? minSalary,decimal? maxSalary)
         {
             var positions =await _positionRepository.GetAllAsync();
 
-            return positions.Select(p => new PositionDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                positions = positions.Where(p =>p.Title.Contains(search) || (p.Description != null &&
+                         p.Description.Contains(search))).ToList();
+            }
+
+            if (minSalary.HasValue)
+            {
+                positions = positions.Where(p => p.BaseSalary >= minSalary.Value).ToList();
+            }
+
+            if (maxSalary.HasValue)
+            {
+                positions = positions.Where(p => p.BaseSalary <= maxSalary.Value).ToList();
+            }
+
+            if (sortBy == "title")
+            {
+                positions = positions.OrderBy(p => p.Title).ToList();
+            }
+            else if (sortBy == "salary")
+            {
+                positions = positions.OrderBy(p => p.BaseSalary).ToList();
+            }
+            else
+            {
+                positions = positions.OrderBy(p => p.PositionId).ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = positions.Count();
+
+            var result = positions.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Select(p => new PositionDto
                 {
                     PositionId = p.PositionId,
                     Title = p.Title,
                     Description = p.Description,
                     BaseSalary = p.BaseSalary
                 }).ToList();
+
+            return new PagedResultDto<PositionDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<PositionDto?> GetByIdAsync(int id)

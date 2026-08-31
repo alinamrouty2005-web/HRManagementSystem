@@ -9,7 +9,7 @@ namespace HRManagement.Core.Interfaces
 {
     public interface IDepartmentService
     {
-        Task<List<DepartmentDto>> GetAllAsync();
+        Task<PagedResultDto<DepartmentDto>> GetAllAsync(string? search,int pageNumber,int pageSize,string? sortBy);
 
         Task<DepartmentDto?> GetByIdAsync(int id);
 

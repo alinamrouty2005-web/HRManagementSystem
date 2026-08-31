@@ -19,16 +19,47 @@ namespace HRManagement.Infrastructure.Services
             _departmentRepository = departmentRepository;
         }
 
-        public async Task<List<DepartmentDto>> GetAllAsync()
+        public async Task<PagedResultDto<DepartmentDto>> GetAllAsync(string? search,int pageNumber,int pageSize,string? sortBy)
         {
-            var departments = await _departmentRepository.GetAllAsync();
+            var departments =await _departmentRepository.GetAllAsync();
 
-            return departments.Select(d => new DepartmentDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                departments = departments.Where(d => d.Name.Contains(search)).ToList();
+            }
+
+            if (sortBy == "name")
+            {
+                departments = departments.OrderBy(d => d.Name).ToList();
+            }
+            else
+            {
+                departments = departments.OrderBy(d => d.DepartmentId).ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = departments.Count();
+
+            var result = departments.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Select(d => new DepartmentDto
                 {
                     DepartmentId = d.DepartmentId,
                     Name = d.Name,
                     Description = d.Description
                 }).ToList();
+
+            return new PagedResultDto<DepartmentDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<DepartmentDto?> GetByIdAsync(int id)

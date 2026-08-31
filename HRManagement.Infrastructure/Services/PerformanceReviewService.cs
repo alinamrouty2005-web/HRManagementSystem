@@ -20,11 +20,87 @@ namespace HRManagement.Infrastructure.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<List<PerformanceReviewDto>> GetAllAsync()
+        public async Task<PagedResultDto<PerformanceReviewDto>> GetAllAsync(
+    string? search,
+    int pageNumber,
+    int pageSize,
+    int? employeeId,
+    int? reviewerId,
+    decimal? minScore,
+    decimal? maxScore,
+    string? sortBy)
         {
-            var reviews = await _reviewRepository.GetAllAsync();
+            var reviews =
+                await _reviewRepository.GetAllAsync();
 
-            return reviews.Select(r => new PerformanceReviewDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                reviews = reviews
+                    .Where(r =>
+                        r.Comments != null &&
+                        r.Comments.Contains(search))
+                    .ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                reviews = reviews
+                    .Where(r => r.EmployeeId == employeeId.Value)
+                    .ToList();
+            }
+
+            if (reviewerId.HasValue)
+            {
+                reviews = reviews
+                    .Where(r => r.ReviewerId == reviewerId.Value)
+                    .ToList();
+            }
+
+            if (minScore.HasValue)
+            {
+                reviews = reviews
+                    .Where(r => r.Score >= minScore.Value)
+                    .ToList();
+            }
+
+            if (maxScore.HasValue)
+            {
+                reviews = reviews
+                    .Where(r => r.Score <= maxScore.Value)
+                    .ToList();
+            }
+
+            if (sortBy == "score")
+            {
+                reviews = reviews
+                    .OrderBy(r => r.Score)
+                    .ToList();
+            }
+            else if (sortBy == "reviewDate")
+            {
+                reviews = reviews
+                    .OrderBy(r => r.ReviewDate)
+                    .ToList();
+            }
+            else
+            {
+                reviews = reviews
+                    .OrderBy(r => r.PerformanceReviewId)
+                    .ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = reviews.Count();
+
+            var result = reviews
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(r => new PerformanceReviewDto
                 {
                     PerformanceReviewId = r.PerformanceReviewId,
                     EmployeeId = r.EmployeeId,
@@ -32,7 +108,16 @@ namespace HRManagement.Infrastructure.Services
                     Score = r.Score,
                     Comments = r.Comments,
                     ReviewDate = r.ReviewDate
-                }).ToList();
+                })
+                .ToList();
+
+            return new PagedResultDto<PerformanceReviewDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<PerformanceReviewDto?> GetByIdAsync(int id)

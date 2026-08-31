@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HRManagement.API.Middleware;
 using HRManagement.Core.Entities;
+using HRManagement.Core.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 
 
@@ -110,6 +112,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+            .Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
+
+        var response = new ErrorResponseDto
+        {
+            Success = false,
+            Message = "Validation failed.",
+            Errors = errors
+        };
+
+        return new BadRequestObjectResult(response);
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -123,14 +146,11 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider
-        .GetRequiredService<AppDbContext>();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-    var adminUsername =
-        builder.Configuration["AdminSeed:Username"];
+    var adminUsername =builder.Configuration["AdminSeed:Username"];
 
-    var adminPassword =
-        builder.Configuration["AdminSeed:Password"];
+    var adminPassword = builder.Configuration["AdminSeed:Password"];
 
     var employee = await context.Employees.FindAsync(1);
 
@@ -138,17 +158,14 @@ using (var scope = app.Services.CreateScope())
         !string.IsNullOrEmpty(adminUsername) &&
         !string.IsNullOrEmpty(adminPassword))
     {
-        var existingUser = await context.Users
-            .FirstOrDefaultAsync(u =>
-                u.Username == adminUsername);
+        var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Username == adminUsername);
 
         if (existingUser is null)
         {
             var adminUser = new User
             {
                 Username = adminUsername,
-                PasswordHash =
-                    BCrypt.Net.BCrypt.HashPassword(adminPassword),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword),
                 EmployeeId = employee.EmployeeId,
                 IsActive = true
             };
@@ -169,6 +186,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseMiddleware<ExceptionMiddleware>();
 

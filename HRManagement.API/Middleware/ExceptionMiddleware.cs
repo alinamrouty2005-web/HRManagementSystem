@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
-using Microsoft.Extensions.Logging;
 using HRManagement.Core.Exceptions;
+using HRManagement.Core.DTOs;
+
 
 
 
@@ -27,30 +28,29 @@ namespace HRManagement.API.Middleware
             {
                 _logger.LogWarning(ex,"Validation error occurred.");
 
-                context.Response.StatusCode = 400;
-                context.Response.ContentType = "application/json";
-
-                var response = new
-                {
-                    message = ex.Message
-                };
-
-                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                await WriteResponse(context,400,ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex,"An unhandled exception occurred.");
 
-                context.Response.StatusCode = 500;
-                context.Response.ContentType = "application/json";
-
-                var response = new
-                {
-                    message = "An internal server error occurred."
-                };
-
-                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                await WriteResponse(context,500,"Something went wrong.");
             }
+        }
+
+        private async Task WriteResponse(HttpContext context,int statusCode,string message)
+        {
+            context.Response.StatusCode = statusCode;
+            context.Response.ContentType = "application/json";
+
+            var response = new ErrorResponseDto
+            {
+                Success = false,
+                Message = message,
+                Errors = new List<string>()
+            };
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     }
 }

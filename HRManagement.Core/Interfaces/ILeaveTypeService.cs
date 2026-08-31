@@ -7,7 +7,7 @@ namespace HRManagement.Core.Interfaces
 {
     public interface ILeaveTypeService
     {
-        Task<List<LeaveTypeDto>> GetAllAsync();
+        Task<PagedResultDto<LeaveTypeDto>> GetAllAsync(string? search,int pageNumber,int pageSize,string? sortBy);
 
         Task<LeaveTypeDto?> GetByIdAsync(int id);
 

@@ -7,8 +7,7 @@ namespace HRManagement.Core.Interfaces
 {
     public interface IPayrollService
     {
-        Task<List<PayrollDto>> GetAllAsync();
-
+        Task<PagedResultDto<PayrollDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? employeeId,bool? isPaid,string? sortBy);
         Task<PayrollDto?> GetByIdAsync(int id);
 
         Task<PayrollDto> CreateAsync(PayrollCreateDto dto);

@@ -25,17 +25,79 @@ namespace HRManagement.Infrastructure.Services
             _positionRepository = positionRepository;
         }
 
-        public async Task<List<EmployeePositionDto>> GetAllAsync()
+        public async Task<PagedResultDto<EmployeePositionDto>> GetAllAsync(
+     string? search,
+     int pageNumber,
+     int pageSize,
+     int? employeeId,
+     int? positionId,
+     string? sortBy)
         {
-            var employeePositions =await _repository.GetAllAsync();
+            var employeePositions =
+                await _repository.GetAllAsync();
 
-            return employeePositions.Select(ep => new EmployeePositionDto
+            if (!string.IsNullOrWhiteSpace(search) &&
+                int.TryParse(search, out int searchEmployeeId))
+            {
+                employeePositions = employeePositions
+                    .Where(ep => ep.EmployeeId == searchEmployeeId)
+                    .ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                employeePositions = employeePositions
+                    .Where(ep => ep.EmployeeId == employeeId.Value)
+                    .ToList();
+            }
+
+            if (positionId.HasValue)
+            {
+                employeePositions = employeePositions
+                    .Where(ep => ep.PositionId == positionId.Value)
+                    .ToList();
+            }
+
+            if (sortBy == "startDate")
+            {
+                employeePositions = employeePositions
+                    .OrderBy(ep => ep.StartDate)
+                    .ToList();
+            }
+            else
+            {
+                employeePositions = employeePositions
+                    .OrderBy(ep => ep.EmployeeId)
+                    .ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = employeePositions.Count();
+
+            var result = employeePositions
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(ep => new EmployeePositionDto
                 {
                     EmployeeId = ep.EmployeeId,
                     PositionId = ep.PositionId,
                     StartDate = ep.StartDate,
                     EndDate = ep.EndDate
-                }).ToList();
+                })
+                .ToList();
+
+            return new PagedResultDto<EmployeePositionDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<EmployeePositionDto?> GetByIdAsync(int employeeId,int positionId)

@@ -21,11 +21,44 @@ namespace HRManagement.Infrastructure.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<List<AttendanceDto>> GetAllAsync()
+        public async Task<PagedResultDto<AttendanceDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? employeeId,bool? isPresent,string? sortBy)
         {
-            var attendances = await _attendanceRepository.GetAllAsync();
+            var attendances =await _attendanceRepository.GetAllAsync();
 
-            return attendances.Select(a => new AttendanceDto
+            if (!string.IsNullOrWhiteSpace(search) && int.TryParse(search, out int searchEmployeeId))
+            {
+                attendances = attendances.Where(a => a.EmployeeId == searchEmployeeId).ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                attendances = attendances.Where(a => a.EmployeeId == employeeId.Value).ToList();
+            }
+
+            if (isPresent.HasValue)
+            {
+                attendances = attendances.Where(a => a.IsPresent == isPresent.Value).ToList();
+            }
+
+            if (sortBy == "date")
+            {
+                attendances = attendances.OrderBy(a => a.Date).ToList();
+            }
+            else
+            {
+                attendances = attendances.OrderBy(a => a.AttendanceId).ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = attendances.Count();
+
+            var result = attendances.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Select(a => new AttendanceDto
                 {
                     AttendanceId = a.AttendanceId,
                     EmployeeId = a.EmployeeId,
@@ -34,6 +67,14 @@ namespace HRManagement.Infrastructure.Services
                     CheckOut = a.CheckOut,
                     IsPresent = a.IsPresent
                 }).ToList();
+
+            return new PagedResultDto<AttendanceDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<AttendanceDto?> GetByIdAsync(int id)

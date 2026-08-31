@@ -16,11 +16,11 @@ namespace HRManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string? search,int pageNumber = 1,int pageSize = 10,int? employeeId = null,int? leaveTypeId = null,bool? isApproved = null,string? sortBy = null)
         {
-            var requests = await _leaveRequestService.GetAllAsync();
+            var result = await _leaveRequestService.GetAllAsync(search,pageNumber,pageSize,employeeId,leaveTypeId,isApproved,sortBy);
 
-            return Ok(requests);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

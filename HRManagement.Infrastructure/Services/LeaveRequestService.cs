@@ -22,20 +22,72 @@ namespace HRManagement.Infrastructure.Services
             _leaveTypeRepository = leaveTypeRepository;
         }
 
-        public async Task<List<LeaveRequestDto>> GetAllAsync()
+        public async Task<PagedResultDto<LeaveRequestDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? employeeId,int? leaveTypeId,bool? isApproved,string? sortBy)
         {
-            var requests = await _leaveRequestRepository.GetAllAsync();
+            var requests =await _leaveRequestRepository.GetAllAsync();
 
-            return requests.Select(lr => new LeaveRequestDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                requests = requests.Where(r => r.Reason != null && r.Reason.Contains(search)).ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                requests = requests.Where(r => r.EmployeeId == employeeId.Value).ToList();
+            }
+
+            if (leaveTypeId.HasValue)
+            {
+                requests = requests.Where(r => r.LeaveTypeId == leaveTypeId.Value).ToList();
+            }
+
+            if (isApproved.HasValue)
+            {
+                requests = requests.Where(r => r.IsApproved == isApproved.Value).ToList();
+            }
+
+            if (sortBy == "startDate")
+            {
+                requests = requests.OrderBy(r => r.StartDate).ToList();
+            }
+            else if (sortBy == "endDate")
+            {
+                requests = requests.OrderBy(r => r.EndDate).ToList();
+            }
+            else
+            {
+                requests = requests.OrderBy(r => r.LeaveRequestId).ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = requests.Count();
+
+            var result = requests
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(r => new LeaveRequestDto
                 {
-                    LeaveRequestId = lr.LeaveRequestId,
-                    EmployeeId = lr.EmployeeId,
-                    LeaveTypeId = lr.LeaveTypeId,
-                    StartDate = lr.StartDate,
-                    EndDate = lr.EndDate,
-                    Reason = lr.Reason,
-                    IsApproved = lr.IsApproved
+                    LeaveRequestId = r.LeaveRequestId,
+                    EmployeeId = r.EmployeeId,
+                    LeaveTypeId = r.LeaveTypeId,
+                    StartDate = r.StartDate,
+                    EndDate = r.EndDate,
+                    Reason = r.Reason,
+                    IsApproved = r.IsApproved
                 }).ToList();
+
+            return new PagedResultDto<LeaveRequestDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<LeaveRequestDto?> GetByIdAsync(int id)

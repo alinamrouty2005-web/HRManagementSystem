@@ -7,7 +7,7 @@ namespace HRManagement.Core.Interfaces
 {
     public interface IAttendanceService
     {
-        Task<List<AttendanceDto>> GetAllAsync();
+        Task<PagedResultDto<AttendanceDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? employeeId,bool? isPresent,string? sortBy);
 
         Task<AttendanceDto?> GetByIdAsync(int id);
 

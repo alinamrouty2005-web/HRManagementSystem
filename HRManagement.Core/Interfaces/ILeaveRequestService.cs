@@ -7,8 +7,7 @@ namespace HRManagement.Core.Interfaces
 {
     public interface ILeaveRequestService
     {
-        Task<List<LeaveRequestDto>> GetAllAsync();
-
+        Task<PagedResultDto<LeaveRequestDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? employeeId,int? leaveTypeId,bool? isApproved,string? sortBy);
         Task<LeaveRequestDto?> GetByIdAsync(int id);
 
         Task<LeaveRequestDto> CreateAsync(LeaveRequestCreateDto dto);

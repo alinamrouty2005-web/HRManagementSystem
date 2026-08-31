@@ -16,15 +16,30 @@ namespace HRManagement.API.Controllers
                 _reviewService = reviewService;
             }
 
-            [HttpGet]
-            public async Task<IActionResult> GetAll()
-            {
-                var reviews = await _reviewService.GetAllAsync();
+        [HttpGet]
+        public async Task<IActionResult> GetAll(
+  string? search,
+  int pageNumber = 1,
+  int pageSize = 10,
+  int? employeeId = null,
+  int? reviewerId = null,
+  decimal? minScore = null,
+  decimal? maxScore = null,
+  string? sortBy = null)
+        {
+            var result = await _reviewService.GetAllAsync(
+                search,
+                pageNumber,
+                pageSize,
+                employeeId,
+                reviewerId,
+                minScore,
+                maxScore,
+                sortBy);
 
-                return Ok(reviews);
-            }
-
-            [HttpGet("{id}")]
+            return Ok(result);
+        }
+        [HttpGet("{id}")]
             public async Task<IActionResult> GetById(int id)
             {
                 var review = await _reviewService.GetByIdAsync(id);

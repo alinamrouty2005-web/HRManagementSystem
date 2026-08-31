@@ -18,11 +18,61 @@ namespace HRManagement.Infrastructure.Services
             _repository = repository;
         }
 
-        public async Task<List<EmployeeProfileDto>> GetAllAsync()
+        public async Task<PagedResultDto<EmployeeProfileDto>> GetAllAsync(
+    string? search,
+    int pageNumber,
+    int pageSize,
+    int? employeeId,
+    string? sortBy)
         {
-            var profiles = await _repository.GetAllAsync();
+            var profiles =
+                await _repository.GetAllAsync();
 
-            return profiles.Select(p => new EmployeeProfileDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                profiles = profiles
+                    .Where(p =>
+                        (p.Address != null &&
+                         p.Address.Contains(search)) ||
+                        (p.Nationality != null &&
+                         p.Nationality.Contains(search)) ||
+                        (p.EmergencyContact != null &&
+                         p.EmergencyContact.Contains(search)))
+                    .ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                profiles = profiles
+                    .Where(p => p.EmployeeId == employeeId.Value)
+                    .ToList();
+            }
+
+            if (sortBy == "dateOfBirth")
+            {
+                profiles = profiles
+                    .OrderBy(p => p.DateOfBirth)
+                    .ToList();
+            }
+            else
+            {
+                profiles = profiles
+                    .OrderBy(p => p.EmployeeProfileId)
+                    .ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = profiles.Count();
+
+            var result = profiles
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(p => new EmployeeProfileDto
                 {
                     EmployeeProfileId = p.EmployeeProfileId,
                     Address = p.Address,
@@ -30,7 +80,16 @@ namespace HRManagement.Infrastructure.Services
                     Nationality = p.Nationality,
                     EmergencyContact = p.EmergencyContact,
                     EmployeeId = p.EmployeeId
-                }).ToList();
+                })
+                .ToList();
+
+            return new PagedResultDto<EmployeeProfileDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<EmployeeProfileDto?> GetByIdAsync(int id)

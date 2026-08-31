@@ -18,16 +18,48 @@ namespace HRManagement.Infrastructure.Services
             _leaveTypeRepository = leaveTypeRepository;
         }
 
-        public async Task<List<LeaveTypeDto>> GetAllAsync()
+        public async Task<PagedResultDto<LeaveTypeDto>> GetAllAsync(string? search,int pageNumber,int pageSize,string? sortBy)
         {
             var leaveTypes =await _leaveTypeRepository.GetAllAsync();
 
-            return leaveTypes.Select(l => new LeaveTypeDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                leaveTypes = leaveTypes.Where(l =>l.Name.Contains(search) || (l.Description != null &&l.Description.Contains(search)))
+                    .ToList();
+            }
+
+            if (sortBy == "name")
+            {
+                leaveTypes = leaveTypes.OrderBy(l => l.Name).ToList();
+            }
+            else
+            {
+                leaveTypes = leaveTypes.OrderBy(l => l.LeaveTypeId).ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = leaveTypes.Count();
+
+            var result = leaveTypes.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Select(l => new LeaveTypeDto
                 {
                     LeaveTypeId = l.LeaveTypeId,
                     Name = l.Name,
                     Description = l.Description
                 }).ToList();
+
+            return new PagedResultDto<LeaveTypeDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<LeaveTypeDto?> GetByIdAsync(int id)

@@ -18,18 +18,72 @@ namespace HRManagement.Infrastructure.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task<List<ProjectDto>> GetAllAsync()
+        public async Task<PagedResultDto<ProjectDto>> GetAllAsync(
+     string? search,
+     int pageNumber,
+     int pageSize,
+     string? sortBy)
         {
-            var projects = await _projectRepository.GetAllAsync();
+            var projects =
+                await _projectRepository.GetAllAsync();
 
-            return projects.Select(p => new ProjectDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                projects = projects
+                    .Where(p =>
+                        p.Name.Contains(search) ||
+                        (p.Description != null &&
+                         p.Description.Contains(search)))
+                    .ToList();
+            }
+
+            if (sortBy == "name")
+            {
+                projects = projects
+                    .OrderBy(p => p.Name)
+                    .ToList();
+            }
+            else if (sortBy == "startDate")
+            {
+                projects = projects
+                    .OrderBy(p => p.StartDate)
+                    .ToList();
+            }
+            else
+            {
+                projects = projects
+                    .OrderBy(p => p.ProjectId)
+                    .ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = projects.Count();
+
+            var result = projects
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(p => new ProjectDto
                 {
                     ProjectId = p.ProjectId,
                     Name = p.Name,
                     Description = p.Description,
                     StartDate = p.StartDate,
                     EndDate = p.EndDate
-                }).ToList();
+                })
+                .ToList();
+
+            return new PagedResultDto<ProjectDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<ProjectDto?> GetByIdAsync(int id)

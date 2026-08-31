@@ -16,11 +16,19 @@ namespace HRManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(
+     string? search,
+     int pageNumber = 1,
+     int pageSize = 10,
+     string? sortBy = null)
         {
-            var projects = await _projectService.GetAllAsync();
+            var result = await _projectService.GetAllAsync(
+                search,
+                pageNumber,
+                pageSize,
+                sortBy);
 
-            return Ok(projects);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

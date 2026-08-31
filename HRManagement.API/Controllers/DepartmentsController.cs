@@ -17,11 +17,11 @@ namespace HRManagement.API.Controllers
 
         // GET: api/Departments
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string? search,int pageNumber = 1,int pageSize = 10,string? sortBy = null)
         {
-            var departments = await _departmentService.GetAllAsync();
+            var result = await _departmentService.GetAllAsync(search,pageNumber,pageSize,sortBy);
 
-            return Ok(departments);
+            return Ok(result);
         }
 
         // GET: api/Departments/1

@@ -23,15 +23,50 @@ namespace HRManagement.Infrastructure.Services
             _logger = logger;
         }
 
-        public async Task<List<EmployeeDto>> GetAllAsync()
-        {
-            _logger.LogInformation("Getting all employees.");
 
+        public async Task<PagedResultDto<EmployeeDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? departmentId,string? sortBy)
+        {
             var employees = await _employeeRepository.GetAllAsync();
 
-            _logger.LogInformation("Retrieved {Count} employees.",employees.Count);
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                employees = employees.Where(e =>
+                e.FirstName.Contains(search) || e.LastName.Contains(search) || e.Email.Contains(search) || e.PhoneNumber.Contains(search))
+                    .ToList();
+            }
 
-            return employees.Select(e => new EmployeeDto
+            if (departmentId.HasValue)
+            {
+                employees = employees.Where(e => e.DepartmentId == departmentId.Value).ToList();
+            }
+
+            if (sortBy == "firstName")
+            {
+                employees = employees.OrderBy(e => e.FirstName).ToList();
+            }
+            else if (sortBy == "lastName")
+            {
+                employees = employees.OrderBy(e => e.LastName).ToList();
+            }
+            else if (sortBy == "hireDate")
+            {
+                employees = employees.OrderBy(e => e.HireDate).ToList();
+            }
+            else
+            {
+                employees = employees.OrderBy(e => e.EmployeeId).ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = employees.Count();
+
+            var result = employees.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Select(e => new EmployeeDto
                 {
                     EmployeeId = e.EmployeeId,
                     FirstName = e.FirstName,
@@ -41,7 +76,16 @@ namespace HRManagement.Infrastructure.Services
                     HireDate = e.HireDate,
                     DepartmentId = e.DepartmentId
                 }).ToList();
+
+            return new PagedResultDto<EmployeeDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
+
 
         public async Task<Employee?> GetByIdAsync(int id)
         {

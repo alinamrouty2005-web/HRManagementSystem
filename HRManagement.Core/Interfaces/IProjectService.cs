@@ -7,8 +7,11 @@ namespace HRManagement.Core.Interfaces
 {
     public interface IProjectService
     {
-        Task<List<ProjectDto>> GetAllAsync();
-
+        Task<PagedResultDto<ProjectDto>> GetAllAsync(
+            string? search,
+            int pageNumber,
+            int pageSize,
+            string? sortBy);
         Task<ProjectDto?> GetByIdAsync(int id);
 
         Task<ProjectDto> CreateAsync(ProjectCreateDto dto);

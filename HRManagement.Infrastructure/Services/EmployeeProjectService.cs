@@ -22,17 +22,80 @@ namespace HRManagement.Infrastructure.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task<List<EmployeeProjectDto>> GetAllAsync()
+        public async Task<PagedResultDto<EmployeeProjectDto>> GetAllAsync(
+     string? search,
+     int pageNumber,
+     int pageSize,
+     int? employeeId,
+     int? projectId,
+     string? sortBy)
         {
-            var employeeProjects =await _repository.GetAllAsync();
+            var employeeProjects =
+                await _repository.GetAllAsync();
 
-            return employeeProjects.Select(ep => new EmployeeProjectDto
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                employeeProjects = employeeProjects
+                    .Where(ep =>
+                        ep.Role != null &&
+                        ep.Role.Contains(search))
+                    .ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                employeeProjects = employeeProjects
+                    .Where(ep => ep.EmployeeId == employeeId.Value)
+                    .ToList();
+            }
+
+            if (projectId.HasValue)
+            {
+                employeeProjects = employeeProjects
+                    .Where(ep => ep.ProjectId == projectId.Value)
+                    .ToList();
+            }
+
+            if (sortBy == "assignedDate")
+            {
+                employeeProjects = employeeProjects
+                    .OrderBy(ep => ep.AssignedDate)
+                    .ToList();
+            }
+            else
+            {
+                employeeProjects = employeeProjects
+                    .OrderBy(ep => ep.EmployeeId)
+                    .ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = employeeProjects.Count();
+
+            var result = employeeProjects
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(ep => new EmployeeProjectDto
                 {
                     EmployeeId = ep.EmployeeId,
                     ProjectId = ep.ProjectId,
                     Role = ep.Role,
                     AssignedDate = ep.AssignedDate
-                }).ToList();
+                })
+                .ToList();
+
+            return new PagedResultDto<EmployeeProjectDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<EmployeeProjectDto?> GetByIdAsync(int employeeId,int projectId)

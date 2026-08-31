@@ -20,11 +20,55 @@ namespace HRManagement.Infrastructure.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<List<SalaryDto>> GetAllAsync()
+        public async Task<PagedResultDto<SalaryDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? employeeId,decimal? minSalary,decimal? maxSalary,string? sortBy)
         {
-            var salaries = await _salaryRepository.GetAllAsync();
+            var salaries =await _salaryRepository.GetAllAsync();
 
-            return salaries.Select(s => new SalaryDto
+            if (!string.IsNullOrWhiteSpace(search) &&int.TryParse(search, out int searchEmployeeId))
+            {
+                salaries = salaries.Where(s => s.EmployeeId == searchEmployeeId).ToList();
+            }
+
+            if (employeeId.HasValue)
+            {
+                salaries = salaries.Where(s => s.EmployeeId == employeeId.Value).ToList();
+            }
+
+            if (minSalary.HasValue)
+            {
+                salaries = salaries.Where(s => s.BasicSalary >= minSalary.Value).ToList();
+            }
+
+            if (maxSalary.HasValue)
+            {
+                salaries = salaries.Where(s => s.BasicSalary <= maxSalary.Value).ToList();
+            }
+
+            if (sortBy == "salary")
+            {
+                salaries = salaries.OrderBy(s => s.BasicSalary).ToList();
+            }
+            else if (sortBy == "effectiveDate")
+            {
+                salaries = salaries.OrderBy(s => s.EffectiveDate).ToList();
+            }
+            else
+            {
+                salaries = salaries.OrderBy(s => s.SalaryId).ToList();
+            }
+
+            if (pageNumber < 1)
+                pageNumber = 1;
+
+            if (pageSize < 1)
+                pageSize = 10;
+
+            var totalCount = salaries.Count();
+
+            var result = salaries
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new SalaryDto
                 {
                     SalaryId = s.SalaryId,
                     EmployeeId = s.EmployeeId,
@@ -33,6 +77,14 @@ namespace HRManagement.Infrastructure.Services
                     Deductions = s.Deductions,
                     EffectiveDate = s.EffectiveDate
                 }).ToList();
+
+            return new PagedResultDto<SalaryDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Data = result
+            };
         }
 
         public async Task<SalaryDto?> GetByIdAsync(int id)

@@ -8,7 +8,7 @@ namespace HRManagement.Core.Interfaces
 {
     public interface IPositionService
     {
-        Task<List<PositionDto>> GetAllAsync();
+        Task<PagedResultDto<PositionDto>> GetAllAsync(string? search,int pageNumber,int pageSize,string? sortBy,decimal? minSalary,decimal? maxSalary);
 
         Task<PositionDto?> GetByIdAsync(int id);
 

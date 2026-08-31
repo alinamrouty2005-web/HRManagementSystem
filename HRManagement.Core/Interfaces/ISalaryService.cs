@@ -7,7 +7,7 @@ namespace HRManagement.Core.Interfaces
 {
     public interface ISalaryService
     {
-        Task<List<SalaryDto>> GetAllAsync();
+        Task<PagedResultDto<SalaryDto>> GetAllAsync(string? search,int pageNumber,int pageSize,int? employeeId,decimal? minSalary, decimal? maxSalary,string? sortBy);
 
         Task<SalaryDto?> GetByIdAsync(int id);
 

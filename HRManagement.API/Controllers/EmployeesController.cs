@@ -21,12 +21,13 @@ namespace HRManagement.API.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string? search,int pageNumber = 1,int pageSize = 10,int? departmentId = null,string? sortBy = null)
         {
-            var employees = await _employeeService.GetAllAsync();
+            var result = await _employeeService.GetAllAsync(search,pageNumber,pageSize,departmentId,sortBy);
 
-            return Ok(employees);
+            return Ok(result);
         }
+
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
