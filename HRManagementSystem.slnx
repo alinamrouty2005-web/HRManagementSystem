@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/Documentation/">
+    <File Path="Documentation/HRManagementSystem_Documentation_2Pages (1).docx" />
+  </Folder>
+  <Folder Name="/Postman-Collection/">
+    <File Path="Postman-Collection/HRManagementSystem.postman_collection (3).json" />
+  </Folder>
   <Project Path="HRManagement.API/HRManagement.API.csproj" />
   <Project Path="HRManagement.Core/HRManagement.Core.csproj" />
   <Project Path="HRManagement.DataAccess/HRManagement.DataAccess.csproj" />

@@ -1,0 +1,1685 @@
+{
+  "info": {
+    "_postman_id": "hr-management-system-final",
+    "name": "HR Management System API",
+    "description": "Postman collection for the HR Management System ASP.NET Core Web API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "GET Employees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Employees/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Employees/department/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees/department/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees",
+                "department",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Employees/count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees/count",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees",
+                "count"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Employees/sorted-by-hire-date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees/sorted-by-hire-date",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees",
+                "sorted-by-hire-date"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Employees",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Ahmad\",\n  \"lastName\": \"Ali\",\n  \"email\": \"ahmad@example.com\",\n  \"phoneNumber\": \"0791234567\",\n  \"hireDate\": \"2026-08-31T00:00:00\",\n  \"departmentId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT Employees/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE Employees/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Employees/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Employees",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Departments",
+      "item": [
+        {
+          "name": "GET Departments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Departments",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Departments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Departments/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Departments/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Departments",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Departments",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Departments",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Departments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Information Technology\",\n  \"description\": \"IT Department\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT Departments/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Departments/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Departments",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE Departments/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Departments/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Departments",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Positions",
+      "item": [
+        {
+          "name": "GET Positions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Positions",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Positions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Positions/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Positions/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Positions",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Positions",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Positions",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Positions"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Backend Developer\",\n  \"description\": \"ASP.NET Core Developer\",\n  \"baseSalary\": 800\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT Positions/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Positions/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Positions",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE Positions/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Positions/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Positions",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendances",
+      "item": [
+        {
+          "name": "GET Attendances",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Attendances",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Attendances"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Attendances/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Attendances/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Attendances",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Attendances",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Attendances",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Attendances"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": 1,\n  \"date\": \"2026-08-31T00:00:00\",\n  \"checkIn\": \"2026-08-31T08:00:00\",\n  \"checkOut\": \"2026-08-31T16:00:00\",\n  \"isPresent\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT Attendances/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Attendances/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Attendances",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE Attendances/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Attendances/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Attendances",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "LeaveTypes",
+      "item": [
+        {
+          "name": "GET LeaveTypes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveTypes",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveTypes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET LeaveTypes/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveTypes/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveTypes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST LeaveTypes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveTypes",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveTypes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Annual Leave\",\n  \"description\": \"Annual vacation\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT LeaveTypes/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveTypes/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveTypes",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE LeaveTypes/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveTypes/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveTypes",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "LeaveRequests",
+      "item": [
+        {
+          "name": "GET LeaveRequests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveRequests",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveRequests"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET LeaveRequests/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveRequests/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveRequests",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST LeaveRequests",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveRequests",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveRequests"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": 1,\n  \"leaveTypeId\": 1,\n  \"startDate\": \"2026-09-01T00:00:00\",\n  \"endDate\": \"2026-09-02T00:00:00\",\n  \"reason\": \"Vacation\",\n  \"isApproved\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT LeaveRequests/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveRequests/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveRequests",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE LeaveRequests/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/LeaveRequests/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "LeaveRequests",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Salaries",
+      "item": [
+        {
+          "name": "GET Salaries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Salaries",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Salaries"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Salaries/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Salaries/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Salaries",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Salaries",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Salaries",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Salaries"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": 1,\n  \"basicSalary\": 800,\n  \"allowances\": 100,\n  \"deductions\": 50,\n  \"effectiveDate\": \"2026-08-31T00:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT Salaries/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Salaries/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Salaries",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE Salaries/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Salaries/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Salaries",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payrolls",
+      "item": [
+        {
+          "name": "GET Payrolls",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Payrolls",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Payrolls"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Payrolls/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Payrolls/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Payrolls",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Payrolls",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Payrolls",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Payrolls"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": 1,\n  \"grossSalary\": 900,\n  \"totalDeductions\": 100,\n  \"netSalary\": 800,\n  \"payrollDate\": \"2026-08-31T00:00:00\",\n  \"isPaid\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT Payrolls/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Payrolls/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Payrolls",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE Payrolls/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Payrolls/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Payrolls",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "PerformanceReviews",
+      "item": [
+        {
+          "name": "GET PerformanceReviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/PerformanceReviews",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "PerformanceReviews"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET PerformanceReviews/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/PerformanceReviews/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "PerformanceReviews",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST PerformanceReviews",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/PerformanceReviews",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "PerformanceReviews"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": 1,\n  \"reviewerId\": 1,\n  \"score\": 90,\n  \"comments\": \"Excellent\",\n  \"reviewDate\": \"2026-08-31T00:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT PerformanceReviews/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/PerformanceReviews/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "PerformanceReviews",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE PerformanceReviews/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/PerformanceReviews/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "PerformanceReviews",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "GET Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Projects",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Projects/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Projects/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Projects",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST Projects",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Projects",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Projects"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"HR Management System\",\n  \"description\": \"HR project\",\n  \"startDate\": \"2026-08-31T00:00:00\",\n  \"endDate\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT Projects/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Projects/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Projects",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE Projects/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Projects/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Projects",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "EmployeeProfiles",
+      "item": [
+        {
+          "name": "GET EmployeeProfiles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProfiles",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProfiles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET EmployeeProfiles/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProfiles/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProfiles",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET EmployeeProfiles/employee/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProfiles/employee/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProfiles",
+                "employee",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST EmployeeProfiles",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProfiles",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProfiles"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"Amman\",\n  \"dateOfBirth\": \"2000-05-10T00:00:00\",\n  \"nationality\": \"Jordanian\",\n  \"emergencyContact\": \"0790000000\",\n  \"employeeId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT EmployeeProfiles/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProfiles/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProfiles",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE EmployeeProfiles/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProfiles/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProfiles",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "EmployeeProjects",
+      "item": [
+        {
+          "name": "GET EmployeeProjects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProjects",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProjects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET EmployeeProjects/1/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProjects/1/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProjects",
+                "1",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST EmployeeProjects",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProjects",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProjects"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": 1,\n  \"projectId\": 1,\n  \"role\": \"Backend Developer\",\n  \"assignedDate\": \"2026-08-31T00:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT EmployeeProjects/1/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProjects/1/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProjects",
+                "1",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE EmployeeProjects/1/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeeProjects/1/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeeProjects",
+                "1",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "EmployeePositions",
+      "item": [
+        {
+          "name": "GET EmployeePositions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeePositions",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeePositions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET EmployeePositions/1/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeePositions/1/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeePositions",
+                "1",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST EmployeePositions",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeePositions",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeePositions"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": 1,\n  \"positionId\": 1,\n  \"startDate\": \"2026-08-31T00:00:00\",\n  \"endDate\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT EmployeePositions/1/1",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeePositions/1/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeePositions",
+                "1",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE EmployeePositions/1/1",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/EmployeePositions/1/1",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "EmployeePositions",
+                "1",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "POST Auth/register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Auth/register",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123456\",\n  \"employeeId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST Auth/login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/api/Auth/login",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "api",
+                "Auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123456\",\n  \"employeeId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET /health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7127/health",
+              "protocol": "https",
+              "host": [
+                "localhost:7127"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
